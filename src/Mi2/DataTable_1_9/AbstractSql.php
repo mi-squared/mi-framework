@@ -207,7 +207,7 @@ abstract class AbstractSql
         // Hack for CPR to deal with special characters
         $newBinds = [];
         foreach ($this->binds as $bind) {
-            $newBinds[]= str_replace("/7\"", "", $bind);
+            $newBinds[]= str_replace('/7\"', "", $bind);
         }
 
         error_log($this->statement);
