@@ -203,8 +203,16 @@ abstract class AbstractSql
         if ( $this->limit instanceof Limit ) {
             $this->statement .= " LIMIT ".$this->limit->start.", ".$this->limit->length;
         }
+        
+        // Hack for CPR to deal with special characters
+        $newBinds = [];
+        foreach ($this->binds as $bind) {
+            $newBinds[]= str_replace("/7\"", "", $bind);
+        }
+
         error_log($this->statement);
-        $this->resultSet = sqlStatement( $this->statement, $this->binds );
+        $this->resultSet = sqlStatement( $this->statement, $newBinds );
+        
         return $this->resultSet;
     }
     
